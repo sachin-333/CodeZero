@@ -1,2 +1,4 @@
 # CodeZero
 Financial Planning for Freelancers and Gig Workers:  Build a platform specifically tailored to the needs of freelancers and gig workers, offering tools for income tracking, tax planning, and financial management in an unpredictable income environment.
+Introduction
+GigWallet, GigFinancier stands out as the answer in the fast-paced world of gig labor and freelancing, where financial stability can be difficult to come by. This website, which was created especially for freelancers and gig workers, provides essential features for tracking revenue, budgeting taxes, and managing finances in the face of erratic earnings. Maintain cash flow transparency and easily track income sources with an accessible interface. With tax estimation and deadline reminders, you can manage the stress of tax season. Allocate money with ease, meet financial targets, and integrate into a network of like-minded independent contractors. 
