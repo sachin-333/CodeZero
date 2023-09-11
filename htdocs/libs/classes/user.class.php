@@ -11,8 +11,8 @@ class user
 
         $sql1 = "SET @@session.time_zone = '+05:30'";
 
-        $sql2 = "INSERT INTO `users` (`name`,`username`, `email`,`phone`, `reg_id`, `signup_time`)
-        VALUES ('$name','$username', '$email', '$phone', '$regid', now())";
+        $sql2 = "INSERT INTO `users` (`name`,`username`, `email`,`phone`, `profession`, `income_range`, `job_type`, `reg_id`, `signup_time`)
+        VALUES ('$name','$username', '$email', '$phone', '', '', '', '$regid', now())";
 
     if ($conn->query($sql1) and $conn->query($sql2))
     {
@@ -131,7 +131,7 @@ class user
         }
     }
 
-    public function update_profile($name, $username, $age, $gender, $dob, $email, $phone)
+    public function update_profile($name, $username, $email, $phone, $profession, $income_range, $job_type)
     {
         if(!$conn)
         {
@@ -140,16 +140,16 @@ class user
         $sql1 = "UPDATE `users` SET
          `name` = '$name',
          `username` = '$username',
-         `age` = '$age',
-          `gender` = '$gender',
-          `dob` = '$dob',
            `email` = '$email',
-            `phone` = '$phone'
+            `phone` = '$phone',
+            `profession` = '$profession',
+            `income_range` = '$income_range',
+            `job_type` = '$job_type'
           WHERE `id` = '$this->id'";
 
           $sql2 = "UPDATE `login` SET 
-            `name` = '$name',
-            `username` = '$username'
+            `username` = '$username',
+            `email` = '$email'
             WHERE `id` = '$this->id'";
         
         if($conn->query($sql1) && $conn->query($sql2) == true)
@@ -163,7 +163,7 @@ class user
 
     }
 
-    public static function changePassword($old, $new, $re_enter, $token, $uid)
+    public function changePassword($old, $new, $re_enter, $token)
     {
         if(usersession::authorize($token) === true)
         {
@@ -171,7 +171,7 @@ class user
         {
             $conn = database::getConnection();
         }
-            $sql = "SELECT `password` FROM `users` WHERE `id` = '$uid'";
+            $sql = "SELECT `password` FROM `login` WHERE `id` = '$this->uid'";
             $result = $conn->query($sql);
             if($result)
             {
@@ -183,7 +183,7 @@ class user
                         $new_hash = password_hash($new, PASSWORD_BCRYPT);
                         $sql1 = "UPDATE `users` SET 
                             `password` = '$new_hash'
-                            WHERE `id` = '$uid'";
+                            WHERE `id` = '$this->id'";
                         $result = $conn->query($sql1);
                         if($result)
                         {
@@ -204,6 +204,7 @@ class user
         {
             echo ("Unauthorized API request detected!");
         }
+}
 
 }
-}
+
