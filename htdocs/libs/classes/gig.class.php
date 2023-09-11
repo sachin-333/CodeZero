@@ -41,7 +41,7 @@ public function __construct($gig_id)
 
 public function calculateIncomeTaxReduction()
 {
-
+    
 }
 
 public function calculateSavings()

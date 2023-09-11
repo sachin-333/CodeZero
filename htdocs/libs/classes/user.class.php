@@ -82,9 +82,7 @@ class user
             $this->reg_id = $row['reg_id'];
 
         } else {
-
             die();
-
         }
     }
 
