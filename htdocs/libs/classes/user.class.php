@@ -78,6 +78,9 @@ class user
             $this->username = $row['username'];
             $this->email = $row['email'];
             $this->phone = $row['phone'];
+            $this->profession = $row['profession'];
+            $this->income_range = $row['income_range'];
+            $this->job_type = $row['job_type'];
             $this->signup_time = $row['signup_time'];
             $this->reg_id = $row['reg_id'];
 
@@ -169,7 +172,7 @@ class user
         {
             $conn = database::getConnection();
         }
-            $sql = "SELECT `password` FROM `login` WHERE `id` = '$this->uid'";
+            $sql = "SELECT `password` FROM `login` WHERE `id` = '$this->id'";
             $result = $conn->query($sql);
             if($result)
             {
@@ -179,7 +182,7 @@ class user
                     if($new == $re_enter)
                     {
                         $new_hash = password_hash($new, PASSWORD_BCRYPT);
-                        $sql1 = "UPDATE `users` SET 
+                        $sql1 = "UPDATE `login` SET 
                             `password` = '$new_hash'
                             WHERE `id` = '$this->id'";
                         $result = $conn->query($sql1);
@@ -188,13 +191,14 @@ class user
                             return true;
                         }
                     }
-                    else{
-                       return false;
+                    else{ 
+                            ?><script>alert('New passsword and re-entered password does not match!')</script><?
+                            
                     }
                 }
                 else
                 {
-                    return false;
+                    ?><script>alert('Old Password mismatch!')</script><?
                 }
             }
         }

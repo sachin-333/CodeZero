@@ -3,7 +3,7 @@
 class gig
 {
 
-public function create($username, $gig_name, $total_income, $fixed_income)
+public static function create($username, $gig_name, $total_income, $fixed_income)
 {
     if(!$conn)
     {
