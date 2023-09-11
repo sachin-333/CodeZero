@@ -2,7 +2,7 @@
 
 function get_config($key)
 {
-    $config = file_get_contents('var/www/CodeZero/workspace/config.json');
+    $config = file_get_contents('/var/www/CodeZero/workspace/config.json');
     $data = json_decode($config, true);
 
     if(isset($data[$key]))
@@ -24,3 +24,5 @@ include_once 'classes/session.class.php';
 include_once 'classes/usersession.class.php';
 
 session::start();
+
+database::getConnection();

@@ -18,6 +18,7 @@ class database
             if($connection)
             {
                 self::$conn = $connection;
+                // echo "success";
                 return self::$conn;
             }
             else{
