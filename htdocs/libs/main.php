@@ -25,4 +25,5 @@ include_once 'classes/usersession.class.php';
 
 session::start();
 
-database::getConnection();
+// user::signup('umar', 'umarfarooq07', 'umar@example.com', '123456789', 'pass', '123');
+user::login('umar@example.com', 'pass');

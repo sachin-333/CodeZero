@@ -11,39 +11,55 @@ class user
 
         $sql1 = "SET @@session.time_zone = '+05:30'";
 
-        $sql2 = "INSERT INTO `users` (`name`,`username`, `email`,`phone`,`password`,`reg_id`, `signup_time`)
-    VALUES ('$name','$username', '$email', '$phone', '$password', '$regid', now())";
+        $sql2 = "INSERT INTO `users` (`name`,`username`, `email`,`phone`, `reg_id`, `signup_time`)
+        VALUES ('$name','$username', '$email', '$phone', '$regid', now())";
 
-        if ($conn->query($sql1) and $conn->query($sql2) === true) {
-             return true;
-            } 
-            else 
+    if ($conn->query($sql1) and $conn->query($sql2))
+    {
+        $sql3 = "SELECT * FROM `users` WHERE `username` = '$username'";
+        $result = $conn->query($sql3);
+        if($result->num_rows == 1)
+        {
+            $row = $result->fetch_assoc();
+            $id = $row['id'];
+            $sql4 = "INSERT INTO `login` (`id`, `username`, `password`, `email`, `reg_id`) 
+            VALUES ('$id', '$username', '$password', '$email', '$regid')";
+            if($conn->query($sql4) == true)
             {
-            return false;
-             }
-
+                return true;
+                // echo "success";
+            } else 
+            {
+                return false;
+                // echo "fail";
+            }
+        }
     }
+    else{
+        die("database error");
+    }
+}
 
     public static function login($username, $password)
     {
         $conn = database::getConnection();
 
-        $sql = "SELECT * FROM `users` WHERE `username` = '$username' OR `email` = '$username'";
+        $sql = "SELECT * FROM `login` WHERE `username` = '$username' OR `email` = '$username'";
         $result = $conn->query($sql);
 
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             $pass_verify = password_verify($password, $row['password']);
             if ($pass_verify === true) {
-                return true;
+              return true;  
+            // echo "success";
             } else {
                 return false;
+                // echo "fail";
             }
 
         } else {
-
             return false;
-
         }
 
     }
@@ -91,6 +107,20 @@ class user
     {
         $conn = database::getConnection();
         $sql = "DELETE FROM `sessions` WHERE `uid` = '$uid'";
+
+        $result = $conn->query($sql);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function signout($session_token)
+    {
+        $conn = database::getConnection();
+        $sql = "DELETE FROM `sessions` WHERE `session_token` = '$session_token'";
 
         $result = $conn->query($sql);
 

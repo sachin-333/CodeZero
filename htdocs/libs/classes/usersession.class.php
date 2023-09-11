@@ -2,7 +2,7 @@
 
 class usersession
 {
-    public static function authenticate($user, $pass, $fingerprint)
+    public static function authenticate($user, $pass)
     {
         $result = user::login($user, $pass);
         if ($result) {
@@ -30,14 +30,13 @@ class usersession
 
             $conn = database::getConnection();
 
-            $sql = "INSERT INTO `sessions` (`uid`, `username`, `session_token`, `user_ip`,`login_time`, `user_agent`, `user_fingerprint`) VALUES ('$id', '$username', '$session_token','$user_ip', now(), '$user_agent')";
+            $sql = "INSERT INTO `sessions` (`uid`, `username`, `session_token`, `user_ip`,`login_time`, `user_agent`) VALUES ('$id', '$username', '$session_token','$user_ip', now(), '$user_agent')";
 
             $result = $conn->query($sql);
 
             if ($result) {
                 session::set('session_token', $session_token);
                 session::set('session_user', $userobj->username);
-                session::set('user_fingerprint', $fingerprint);
                 session::set('user_id', $userobj->id);
 
                 return true;
@@ -51,11 +50,10 @@ class usersession
 
     }
 
-    public static function authorize($token, $fingerprint)
+    public static function authorize($token)
     {
         $host_ip = $_SERVER['REMOTE_ADDR'];
         $host_useragent = $_SERVER['HTTP_USER_AGENT'];
-        $host_fingerprint = $_POST['fingerprint'];
 
         $conn = database::getConnection();
 
@@ -67,13 +65,12 @@ class usersession
             $row = $result->fetch_assoc();
             $session_ip = $row['user_ip'];
             $session_useragent = $row['user_agent'];
-            $user_fingerprint = $row['user_fingerprint'];
         } else {
             session::unset_all();
             header('Location: /users/login');
         }
 
-        if ($host_ip == $session_ip and $host_useragent == $session_useragent and $host_fingerprint == $user_fingerprint) {
+        if ($host_ip == $session_ip and $host_useragent == $session_useragent) {
             return true;
         } else {
 
@@ -121,9 +118,6 @@ class usersession
             } else {
                return false;
             }
-
         }
-
     }
-
 }
