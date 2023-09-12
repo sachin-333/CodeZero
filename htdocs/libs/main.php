@@ -20,6 +20,7 @@ function load_template($name)
 
 include_once 'classes/database.class.php';
 include_once 'classes/user.class.php';
+include_once 'classes/gig.class.php';
 include_once 'classes/session.class.php';
 include_once 'classes/usersession.class.php';
 

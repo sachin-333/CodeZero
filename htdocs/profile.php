@@ -118,7 +118,7 @@ if (session::get('session_token')) {
     
     <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all ">
         <div class="sidebar-header d-flex align-items-center justify-content-start">
-            <a href="../dashboard/index.html" class="navbar-brand">
+            <a href="/" class="navbar-brand">
                 <!--Logo start-->
                 <!--logo End-->
                 
@@ -168,7 +168,7 @@ if (session::get('session_token')) {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="../dashboard/index.html">
+                        <a class="nav-link" aria-current="page" href="/">
                             <i class="icon">
                                 <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-20">
                                     <path opacity="0.4" d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z" fill="currentColor"></path>
@@ -215,7 +215,7 @@ if (session::get('session_token')) {
 
 
                     <li class="nav-item">
-                        <a class="nav-link "  href="/profile">
+                        <a class="nav-link  active"  href="/profile">
                             <i class="icon">
                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M7.7688 8.71387H16.2312C18.5886 8.71387 20.5 10.5831 20.5 12.8885V17.8254C20.5 20.1308 18.5886 22 16.2312 22H7.7688C5.41136 22 3.5 20.1308 3.5 17.8254V12.8885C3.5 10.5831 5.41136 8.71387 7.7688 8.71387ZM11.9949 17.3295C12.4928 17.3295 12.8891 16.9419 12.8891 16.455V14.2489C12.8891 13.772 12.4928 13.3844 11.9949 13.3844C11.5072 13.3844 11.1109 13.772 11.1109 14.2489V16.455C11.1109 16.9419 11.5072 17.3295 11.9949 17.3295Z" fill="currentColor"></path>
@@ -509,7 +509,7 @@ if (session::get('session_token')) {
         <!--Nav Start-->
         <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
           <div class="container-fluid navbar-inner">
-            <a href="../dashboard/index.html" class="navbar-brand">
+            <a href="/" class="navbar-brand">
                 <!--Logo start-->
                 <!--logo End-->
                 
@@ -733,7 +733,9 @@ if (session::get('session_token')) {
                     <li><a class="dropdown-item" href="/gigs">My Gigs</a></li>
                     <li><a class="dropdown-item" href="C:\Users\harsh\OneDrive\Desktop\CodeZero\htdocs\dashboard\Gigswitchhtml">Gig Switch</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="../dashboard/auth/sign-in.html">Logout</a></li>
+                    <li><a class="dropdown-item" href="?signout">Logout</a></li>
+                    <li><a class="dropdown-item" href="?signout_all">Logout from all devices</a></li>
+
 
                   </ul>
                 </li>

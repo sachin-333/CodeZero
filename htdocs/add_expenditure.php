@@ -1,4 +1,57 @@
+<?php
 
+include_once $_SERVER['DOCUMENT_ROOT']."/libs/main.php";
+
+if (session::get('session_token')) {
+
+    $session_token = session::get('session_token');
+    usersession::isValid($session_token);
+    usersession::authorize($session_token);
+    $id = session::get('user_id');
+    $userobj = new user($id);
+  
+  
+  if (isset($_GET['signout'])) {
+  
+    session::destroy();
+    header('Location:  /users/login');
+  
+  }
+  
+  if(isset($_GET['signout_all']))
+  {
+  user::signout_all($userobj->id);
+  session::destroy();
+  header('Location: /users/login');
+  }
+  
+  }
+  else{
+    header('Location: /users/login');
+  }
+
+  if(isset($_POST['remarks']) and
+  isset($_POST['expenses']) and
+  isset($_POST['gig_id']))
+  {
+    $expense = $_POST['expenses'];
+    $remarks = $_POST['remarks'];
+    $gig_id = $_POST['gig_id'];
+    $gig_obj = new gig($gig_id);
+
+    $res = $gig_obj->addExpenseHistory($userobj->id, $gig_id, $gig_obj->gig_name, $gig_obj->updated_remaining_amt, $expense, $remarks);
+    if($res)
+    {
+      ?><script>alert('Expense added!')</script><? 
+    }
+    else{
+      ?><script>alert('Adding expense failed!')</script><? 
+    }
+  }
+  ?>
+  ?>
+
+  
 <!doctype html>
 <html lang="en" dir="ltr">
   <head>
@@ -40,7 +93,7 @@
     
     <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all ">
         <div class="sidebar-header d-flex align-items-center justify-content-start">
-            <a href="../dashboard/index.html" class="navbar-brand">
+            <a href="/" class="navbar-brand">
                 <!--Logo start-->
                 <!--logo End-->
                 
@@ -90,7 +143,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="../dashboard/index.html">
+                        <a class="nav-link" aria-current="page" href="/">
                             <i class="icon">
                                 <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-20">
                                     <path opacity="0.4" d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z" fill="currentColor"></path>
@@ -155,7 +208,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/add_expenditure">
+                        <a class="nav-link  active" href="/add_expenditure">
                             <i class="icon">
                                  <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                
                                <path opacity="0.4" d="M2 11.0786C2.05 13.4166 2.19 17.4156 2.21 17.8566C2.281 18.7996 2.642 19.7526 3.204 20.4246C3.986 21.3676 4.949 21.7886 6.292 21.7886C8.148 21.7986 10.194 21.7986 12.181 21.7986C14.176 21.7986 16.112 21.7986 17.747 21.7886C19.071 21.7886 20.064 21.3566 20.836 20.4246C21.398 19.7526 21.759 18.7896 21.81 17.8566C21.83 17.4856 21.93 13.1446 21.99 11.0786H2Z" fill="currentColor"></path>                                <path d="M11.2451 15.3843V16.6783C11.2451 17.0923 11.5811 17.4283 11.9951 17.4283C12.4091 17.4283 12.7451 17.0923 12.7451 16.6783V15.3843C12.7451 14.9703 12.4091 14.6343 11.9951 14.6343C11.5811 14.6343 11.2451 14.9703 11.2451 15.3843Z" fill="currentColor"></path>                                <path fill-rule="evenodd" clip-rule="evenodd" d="M10.211 14.5565C10.111 14.9195 9.762 15.1515 9.384 15.1015C6.833 14.7455 4.395 13.8405 2.337 12.4815C2.126 12.3435 2 12.1075 2 11.8555V8.38949C2 6.28949 3.712 4.58149 5.817 4.58149H7.784C7.972 3.12949 9.202 2.00049 10.704 2.00049H13.286C14.787 2.00049 16.018 3.12949 16.206 4.58149H18.183C20.282 4.58149 21.99 6.28949 21.99 8.38949V11.8555C21.99 12.1075 21.863 12.3425 21.654 12.4815C19.592 13.8465 17.144 14.7555 14.576 15.1105C14.541 15.1155 14.507 15.1175 14.473 15.1175C14.134 15.1175 13.831 14.8885 13.746 14.5525C13.544 13.7565 12.821 13.1995 11.99 13.1995C11.148 13.1995 10.433 13.7445 10.211 14.5565ZM13.286 3.50049H10.704C10.031 3.50049 9.469 3.96049 9.301 4.58149H14.688C14.52 3.96049 13.958 3.50049 13.286 3.50049Z" fill="currentColor">
@@ -430,7 +483,7 @@
         <!--Nav Start-->
         <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
           <div class="container-fluid navbar-inner">
-            <a href="../../dashboard/index.html" class="navbar-brand">
+            <a href="..//" class="navbar-brand">
                 <!--Logo start-->
                 <!--logo End-->
                 
@@ -675,7 +728,9 @@
                     <li><a class="dropdown-item" href="../../dashboard/app/user-profile.html">Profile</a></li>
                     <li><a class="dropdown-item" href="../../dashboard/app/user-privacy-setting.html">Privacy Setting</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="../../dashboard/auth/sign-in.html">Logout</a></li>
+                    <li><a class="dropdown-item" href="?signout">Logout</a></li>
+                    <li><a class="dropdown-item" href="?signout_all">Logout from all devices</a></li>
+
                   </ul>
                 </li>
               </ul>
@@ -688,18 +743,38 @@
                       <div class="col-md-12">
                           <div class="flex-wrap d-flex justify-content-between align-items-center">
                               <div>
-                                  <h1>Hello Devs!</h1>
+                                  <h1>Hello <?echo $userobj->name?>!</h1>
                                   <p>We are on a mission to help developers like you build successful projects for FREE.</p>
                               </div>
-                              <div>
-                                  <a href="" class="btn btn-link btn-soft-light">
-                                      <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M11.8251 15.2171H12.1748C14.0987 15.2171 15.731 13.985 16.3054 12.2764C16.3887 12.0276 16.1979 11.7713 15.9334 11.7713H14.8562C14.5133 11.7713 14.2362 11.4977 14.2362 11.16C14.2362 10.8213 14.5133 10.5467 14.8562 10.5467H15.9005C16.2463 10.5467 16.5263 10.2703 16.5263 9.92875C16.5263 9.58722 16.2463 9.31075 15.9005 9.31075H14.8562C14.5133 9.31075 14.2362 9.03619 14.2362 8.69849C14.2362 8.35984 14.5133 8.08528 14.8562 8.08528H15.9005C16.2463 8.08528 16.5263 7.8088 16.5263 7.46728C16.5263 7.12575 16.2463 6.84928 15.9005 6.84928H14.8562C14.5133 6.84928 14.2362 6.57472 14.2362 6.23606C14.2362 5.89837 14.5133 5.62381 14.8562 5.62381H15.9886C16.2483 5.62381 16.4343 5.3789 16.3645 5.13113C15.8501 3.32401 14.1694 2 12.1748 2H11.8251C9.42172 2 7.47363 3.92287 7.47363 6.29729V10.9198C7.47363 13.2933 9.42172 15.2171 11.8251 15.2171Z" fill="currentColor"></path>
-                                          <path opacity="0.4" d="M19.5313 9.82568C18.9966 9.82568 18.5626 10.2533 18.5626 10.7823C18.5626 14.3554 15.6186 17.2627 12.0005 17.2627C8.38136 17.2627 5.43743 14.3554 5.43743 10.7823C5.43743 10.2533 5.00345 9.82568 4.46872 9.82568C3.93398 9.82568 3.5 10.2533 3.5 10.7823C3.5 15.0873 6.79945 18.6413 11.0318 19.1186V21.0434C11.0318 21.5715 11.4648 22.0001 12.0005 22.0001C12.5352 22.0001 12.9692 21.5715 12.9692 21.0434V19.1186C17.2006 18.6413 20.5 15.0873 20.5 10.7823C20.5 10.2533 20.066 9.82568 19.5313 9.82568Z" fill="currentColor"></path>
-                                      </svg>
-                                      Announcements
-                                  </a>
-                              </div>
+                              <form method="post">
+                              <div class="btn-group">
+                                <a class="btn btn-link btn-soft-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Switch Gig
+                                </a>
+                                <select class="dropdown-menu" name="gig_id">
+                                    <option>Select your gig</option>
+                                    <?
+            
+                                     $conn = database::getConnection();
+                                     $sql = "SELECT * FROM `gig` WHERE `uid` = '$userobj->id'";
+                                     $result = $conn->query($sql);
+                                     if($result->num_rows)
+                                     {
+                                         for($i=1; $i<=$result->num_rows; $i++)
+                                         {
+                                            $row = $result->fetch_assoc();
+                                             ?>
+                                    <option><a class="dropdown-item" href="#"><?echo $row['gig_id']?></a></option>
+                                    <?
+                                         }
+                                        }
+                                        ?>
+                                    <!-- <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Separated link</a></li> -->
+                                </select>
+                            </div>
+                          </form>
+
                           </div>
                       </div>
                   </div>
@@ -726,8 +801,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form>
-                        <div class="form-group col-md-6">
+                    <form method="post">
+                        <div class="form-group">
                             <div class="form-group">
                                <label class="form-label">Expenses Label:</label>
                                <select name="remarks" class="selectpicker form-control" data-style="py-0" required>
@@ -744,13 +819,34 @@
                                </select>
                             </div>
                          </div>
+                         <label class="form-label">Gig ID</label>
+                         <select name="gig_id" class="selectpicker form-control" data-style="py-0" required>
+                         <option>Select your gig</option>
+                                    <?
+            
+                                     $conn = database::getConnection();
+                                     $sql = "SELECT * FROM `gig` WHERE `uid` = '$userobj->id'";
+                                     $result = $conn->query($sql);
+                                     if($result->num_rows)
+                                     {
+                                         for($i=1; $i<=$result->num_rows; $i++)
+                                         {
+                                            $row = $result->fetch_assoc();
+                                             ?>
+                                    <option><a class="dropdown-item" href="#"><?echo $row['gig_id']?></a></option>
+                                    <?
+                                         }
+                                        }
+                                        ?>
+                               </select>
+
+                         <br>
                         <div class="form-group">
                             <label class="form-label" for="pwd">Expenses:</label>
-                            <input type="expenses" class="form-control" id="pwd">
+                            <input type="expenses" name="expenses" class="form-control" id="pwd">
                         </div>
                         
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="submit" class="btn btn-danger">cancel</button>
                     </form>
                 </div>
             </div>

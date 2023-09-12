@@ -36,7 +36,7 @@ if (session::get('session_token')) {
     $gig_name = $_POST['gig_name'];
     $total_income = $_POST['total_income'];
 
-    $create_gig = gig::create($userobj->username, $gig_name, $total_income, $fixed_income);
+    $create_gig = gig::create($userobj->id, $userobj->username, $gig_name, $total_income, 'yes');
     if($create_gig == true)
     {
         ?><script>alert('Gig Creation Success!')</script><?  
@@ -89,7 +89,7 @@ if (session::get('session_token')) {
     
     <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all ">
         <div class="sidebar-header d-flex align-items-center justify-content-start">
-            <a href="../dashboard/index.html" class="navbar-brand">
+            <a href="/" class="navbar-brand">
                 <!--Logo start-->
                 <!--logo End-->
                 
@@ -139,7 +139,7 @@ if (session::get('session_token')) {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="../dashboard/index.html">
+                        <a class="nav-link" aria-current="page" href="/">
                             <i class="icon">
                                 <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-20">
                                     <path opacity="0.4" d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z" fill="currentColor"></path>
@@ -165,7 +165,7 @@ if (session::get('session_token')) {
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/add_gig">
+                        <a class="nav-link active" aria-current="page" href="/add_gig">
                         <i class="icon">
                                 <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path opacity="0.4" d="M21.25 13.4764C20.429 13.4764 19.761 12.8145 19.761 12.001C19.761 11.1865 20.429 10.5246 21.25 10.5246C21.449 10.5246 21.64 10.4463 21.78 10.3076C21.921 10.1679 22 9.97864 22 9.78146L21.999 7.10415C21.999 4.84102 20.14 3 17.856 3H6.144C3.86 3 2.001 4.84102 2.001 7.10415L2 9.86766C2 10.0648 2.079 10.2541 2.22 10.3938C2.36 10.5325 2.551 10.6108 2.75 10.6108C3.599 10.6108 4.239 11.2083 4.239 12.001C4.239 12.8145 3.571 13.4764 2.75 13.4764C2.336 13.4764 2 13.8093 2 14.2195V16.8949C2 19.158 3.858 21 6.143 21H17.857C20.142 21 22 19.158 22 16.8949V14.2195C22 13.8093 21.664 13.4764 21.25 13.4764Z" fill="currentColor"></path>
@@ -479,7 +479,7 @@ if (session::get('session_token')) {
         <!--Nav Start-->
         <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
           <div class="container-fluid navbar-inner">
-            <a href="../../dashboard/index.html" class="navbar-brand">
+            <a href="/" class="navbar-brand">
                 <!--Logo start-->
                 <!--logo End-->
                 
@@ -724,7 +724,9 @@ if (session::get('session_token')) {
                     <li><a class="dropdown-item" href="../../dashboard/app/user-profile.html">Profile</a></li>
                     <li><a class="dropdown-item" href="../../dashboard/app/user-privacy-setting.html">Privacy Setting</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="../../dashboard/auth/sign-in.html">Logout</a></li>
+                    <li><a class="dropdown-item" href="?signout">Logout</a></li>
+                    <li><a class="dropdown-item" href="?signout_all">Logout from all devices</a></li>
+
                   </ul>
                 </li>
               </ul>
@@ -737,17 +739,8 @@ if (session::get('session_token')) {
                       <div class="col-md-12">
                           <div class="flex-wrap d-flex justify-content-between align-items-center">
                               <div>
-                                  <h1>Hello Devs!</h1>
+                                  <h1>Hello <?echo $gig_obj->gig_name?>!</h1>
                                   <p>We are on a mission to help developers like you build successful projects for FREE.</p>
-                              </div>
-                              <div>
-                                  <a href="" class="btn btn-link btn-soft-light">
-                                      <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M11.8251 15.2171H12.1748C14.0987 15.2171 15.731 13.985 16.3054 12.2764C16.3887 12.0276 16.1979 11.7713 15.9334 11.7713H14.8562C14.5133 11.7713 14.2362 11.4977 14.2362 11.16C14.2362 10.8213 14.5133 10.5467 14.8562 10.5467H15.9005C16.2463 10.5467 16.5263 10.2703 16.5263 9.92875C16.5263 9.58722 16.2463 9.31075 15.9005 9.31075H14.8562C14.5133 9.31075 14.2362 9.03619 14.2362 8.69849C14.2362 8.35984 14.5133 8.08528 14.8562 8.08528H15.9005C16.2463 8.08528 16.5263 7.8088 16.5263 7.46728C16.5263 7.12575 16.2463 6.84928 15.9005 6.84928H14.8562C14.5133 6.84928 14.2362 6.57472 14.2362 6.23606C14.2362 5.89837 14.5133 5.62381 14.8562 5.62381H15.9886C16.2483 5.62381 16.4343 5.3789 16.3645 5.13113C15.8501 3.32401 14.1694 2 12.1748 2H11.8251C9.42172 2 7.47363 3.92287 7.47363 6.29729V10.9198C7.47363 13.2933 9.42172 15.2171 11.8251 15.2171Z" fill="currentColor"></path>
-                                          <path opacity="0.4" d="M19.5313 9.82568C18.9966 9.82568 18.5626 10.2533 18.5626 10.7823C18.5626 14.3554 15.6186 17.2627 12.0005 17.2627C8.38136 17.2627 5.43743 14.3554 5.43743 10.7823C5.43743 10.2533 5.00345 9.82568 4.46872 9.82568C3.93398 9.82568 3.5 10.2533 3.5 10.7823C3.5 15.0873 6.79945 18.6413 11.0318 19.1186V21.0434C11.0318 21.5715 11.4648 22.0001 12.0005 22.0001C12.5352 22.0001 12.9692 21.5715 12.9692 21.0434V19.1186C17.2006 18.6413 20.5 15.0873 20.5 10.7823C20.5 10.2533 20.066 9.82568 19.5313 9.82568Z" fill="currentColor"></path>
-                                      </svg>
-                                      Announcements
-                                  </a>
                               </div>
                           </div>
                       </div>
@@ -1002,6 +995,15 @@ if (session::get('session_token')) {
         </div>
       </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const dropdown = document.getElementById('gig-dropdown');
+        dropdown.addEventListener('change', function() {
+        dropdown.form.submit();
+    });
+});
+        </script>
 
     <!-- Library Bundle Script -->
     <script src="/assets/js/core/libs.min.js"></script>

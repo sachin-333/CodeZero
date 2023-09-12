@@ -31,6 +31,7 @@ if (session::get('session_token')) {
   }
 
 
+
   ?>
 
 <!doctype html>
@@ -74,7 +75,7 @@ if (session::get('session_token')) {
     
     <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all ">
         <div class="sidebar-header d-flex align-items-center justify-content-start">
-            <a href="../dashboard/index.html" class="navbar-brand">
+            <a href="/" class="navbar-brand">
                 <!--Logo start-->
                 <!--logo End-->
                 
@@ -124,7 +125,7 @@ if (session::get('session_token')) {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="../dashboard/index.html">
+                        <a class="nav-link " aria-current="page" href="/">
                             <i class="icon">
                                 <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-20">
                                     <path opacity="0.4" d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z" fill="currentColor"></path>
@@ -200,7 +201,7 @@ if (session::get('session_token')) {
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/expenditure_history">
+                        <a class="nav-link active" href="/expenditure_history">
                         <i class="icon">
                                 <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path opacity="0.4" d="M21.25 13.4764C20.429 13.4764 19.761 12.8145 19.761 12.001C19.761 11.1865 20.429 10.5246 21.25 10.5246C21.449 10.5246 21.64 10.4463 21.78 10.3076C21.921 10.1679 22 9.97864 22 9.78146L21.999 7.10415C21.999 4.84102 20.14 3 17.856 3H6.144C3.86 3 2.001 4.84102 2.001 7.10415L2 9.86766C2 10.0648 2.079 10.2541 2.22 10.3938C2.36 10.5325 2.551 10.6108 2.75 10.6108C3.599 10.6108 4.239 11.2083 4.239 12.001C4.239 12.8145 3.571 13.4764 2.75 13.4764C2.336 13.4764 2 13.8093 2 14.2195V16.8949C2 19.158 3.858 21 6.143 21H17.857C20.142 21 22 19.158 22 16.8949V14.2195C22 13.8093 21.664 13.4764 21.25 13.4764Z" fill="currentColor"></path>
@@ -464,7 +465,7 @@ if (session::get('session_token')) {
         <!--Nav Start-->
         <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
           <div class="container-fluid navbar-inner">
-            <a href="../dashboard/index.html" class="navbar-brand">
+            <a href="/" class="navbar-brand">
                 <!--Logo start-->
                 <!--logo End-->
                 
@@ -688,7 +689,9 @@ if (session::get('session_token')) {
                     <li><a class="dropdown-item" href="/gigs">My Gigs</a></li>
                     <li><a class="dropdown-item" href="C:\Users\harsh\OneDrive\Desktop\CodeZero\htdocs\dashboard\Gigswitchhtml">Gig Switch</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="../dashboard/auth/sign-in.html">Logout</a></li>
+                    <li><a class="dropdown-item" href="?signout">Logout</a></li>
+                    <li><a class="dropdown-item" href="?signout_all">Logout from all devices</a></li>
+
 
                   </ul>
                 </li>
@@ -710,7 +713,7 @@ if (session::get('session_token')) {
                                 <a class="btn btn-link btn-soft-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     Switch Gig
                                 </a>
-                                <select class="dropdown-menu" name="gig_id" id="gig-dropdown" value="">
+                                <select class="dropdown-menu" name="gig_id" id="gig-dropdown">
                                     <option selected>Select your gig</option>
                                     <?
             
@@ -1011,8 +1014,8 @@ if (session::get('session_token')) {
         dropdown.form.submit();
     });
 });
-        </script>
 
+</script>
     <!-- Library Bundle Script -->
     <script src="/assets/js/core/libs.min.js"></script>
     

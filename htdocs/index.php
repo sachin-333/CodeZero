@@ -689,7 +689,9 @@ if (session::get('session_token')) {
                     <li><a class="dropdown-item" href="/gigs">My Gigs</a></li>
                     <li><a class="dropdown-item" href="C:\Users\harsh\OneDrive\Desktop\CodeZero\htdocs\dashboard\Gigswitchhtml">Gig Switch</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="../dashboard/auth/sign-in.html">Logout</a></li>
+                    <li><a class="dropdown-item" href="?signout">Logout</a></li>
+                    <li><a class="dropdown-item" href="?signout_all">Logout from all devices</a></li>
+
 
                   </ul>
                 </li>
@@ -804,6 +806,14 @@ if (session::get('session_token')) {
                      </div>
                   </div>
                </li> -->
+<?
+               if(isset($_POST['gig_id']))
+  {
+    $gig_id = $_POST['gig_id'];
+    $gig_obj = new gig($gig_id);
+
+  }
+  ?>
                <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1000">
                   <div class="card-body">
                      <div class="progress-widget">
@@ -814,7 +824,7 @@ if (session::get('session_token')) {
                         </div>
                         <div class="progress-detail">
                            <p  class="mb-2">Total Income</p>
-                           <h4 class="counter">$742K</h4>
+                           <h4 class="counter">₹<?echo $gig_obj->total_income?></h4>
                         </div>
                      </div>
                   </div>
@@ -828,8 +838,8 @@ if (session::get('session_token')) {
                            </svg>
                         </div>
                         <div class="progress-detail">
-                           <p  class="mb-2">Total Expenditure</p>
-                           <h4 class="counter">$150K</h4>
+                           <p  class="mb-2">Emergency Fund</p>
+                           <h4 class="counter">₹<?echo $gig_obj->emergency_savings?></h4>
                         </div>
                      </div>
                   </div>
@@ -844,12 +854,14 @@ if (session::get('session_token')) {
                         </div>
                         <div class="progress-detail">
                            <p  class="mb-2">Total Savings</p>
-                           <h4 class="counter">$4600</h4>
+                           <h4 class="counter">₹<?echo $gig_obj->general_savings?></h4>
                         </div>
                      </div>
                   </div>
                </li>
-               <!-- <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1300">
+               
+               
+               <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1300">
                   <div class="card-body">
                      <div class="progress-widget">
                         <div id="circle-progress-07" class="text-center circle-progress-01 circle-progress circle-progress-primary" data-min-value="0" data-max-value="100" data-value="30" data-type="percent">
@@ -858,12 +870,12 @@ if (session::get('session_token')) {
                            </svg>
                         </div>
                         <div class="progress-detail">
-                           <p  class="mb-2">Members</p>
-                           <h4 class="counter">11.2M</h4>
+                           <p  class="mb-2">Available amount</p>
+                           <h4 class="counter">₹<?echo $gig_obj->updated_remaining_amt?></h4>
                         </div>
                      </div>
                   </div>
-               </li> -->
+               </li>
             </ul>
             <div class="swiper-button swiper-button-next"></div>
             <div class="swiper-button swiper-button-prev"></div>
@@ -876,8 +888,8 @@ if (session::get('session_token')) {
             <div class="card" data-aos="fade-up" data-aos-delay="800">
                <div class="flex-wrap card-header d-flex justify-content-between align-items-center">
                   <div class="header-title">
-                     <h4 class="card-title">$855.8K</h4>
-                     <p class="mb-0">Gross Sales</p>          
+                     <h4 class="card-title">₹<?echo $gig_obj->general_savings?></h4>
+                     <p class="mb-0">Savings</p>          
                   </div>
                   <div class="d-flex align-items-center align-self-center">
                      <div class="d-flex align-items-center text-primary">
